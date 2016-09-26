@@ -119,15 +119,17 @@ class Board():
             if depth==1: #if the side we are inserting from is avaiable (='emp'), then accept the placement
                 if spot[frontback]=='emp':
                     spot[frontback]=color+side
-                    if spot[(frontback+1)%2] =='emp':self.deltah +=0.5 #emp to half minus 0.5
-                    else: self.deltah +=1.5 #half to full, reduce by 1.5
+                    if spot[(frontback+1)%2] =='emp':self.deltah +=1 #emp to half minus 1
+                    else: self.deltah +=2 #half to full, reduce by 1.5
+                    if  (row==0 or row ==4):self.deltah +=0.5
+                    if (column==0 or column==5): self.deltah+=0.5
                     return spot
             if depth==2: #both sides have to be empty to be an acceptable placement
-                if spot[0]=="emp" and spot[1]=="emp":
+                if spot[0]=="emp" and spot[1]=="emp": 
                     spot = [color+side,color+side]
-                    if (row==0 or row ==4) and (column==0 or column==5): self.deltah+=4.5 #corner empty to full, -4.5
-                    elif (row==0 or row ==4 or column==0 or column ==5): self.deltah+=3.5
-                    else: self.deltah+=3 #emp to full, minus 3
+                    self.deltah += 3 #empty to full, decrease by 3
+                    if (row==0 or row ==4): self.deltah+=1 #side goes to 1 if, -4; corner goes to both if, -5
+                    if (column==0 or column ==5): self.deltah+=1
                     return spot
             # print "Illegal Position: overlap not allowed at this position." #run through this step without return, unsuccessful attemp
             return None

@@ -6,44 +6,47 @@
 from Piece import *
 
 class Board():
-    def __init__(self,initial = True, boardState = []): #intialize an empty board, an unsued list of all pegs, an empty list to record flipped pegs
-
+    def __init__(self,initial = True,boardState=[]):
         self.iterateList = [(i,j) for i in range(5) for j in range(6)]
         self.iterateList.remove((4,5))
         self.iterateList.remove((4,4))
         self.iterateList.remove((3,5))
+        self.deltah=0
+        self.onBoard=[]
         self.unused=['re','lb','pp','or','gr','ye','dg','db','p1','p2','bl']
-        if initial:
-            self.board=[[['emp','emp'] for j in range (6)] for i in range (5)]
-        else:
-            #todo : using the action to recursively get the board or store the baord as the state of the nodes
-            self.board=[]
-            # print self.iterateList
-            for i in range(5):
-                line = []
-                temp = boardState[i*36:(i+1)*36]
-                for j in range(6):
-                    curr = temp[j*6:(j+1)*6]
-                    front = curr[0:3]
-                    back = curr[3:]
-                    line.append([front,back])
-                    if front!='emp' and back!='emp':
-                        try:
-                            self.iterateList.remove((i,j))
-                        except ValueError:
-                            pass
-                    try:
-                        self.unused.remove(front[0:2])
-                        self.unused.remove(back[0:2])
-                    except ValueError:
-                        pass
-                self.board.append(line)
+        self.board=[[['emp','emp'] for j in range (6)] for i in range (5)]
+        # if not initial:
+        #     #todo : using the action to recursively get the board or store the baord as the state of the nodes
+        #     self.board=[]
+        #     # print self.iterateList
+        #     for i in range(5):
+        #         line = []
+        #         temp = boardState[i*36:(i+1)*36]
+        #         for j in range(6):
+        #             curr = temp[j*6:(j+1)*6]
+        #             front = curr[0:3]
+        #             back = curr[3:]
+        #             line.append([front,back])
+        #             if front!='emp' and back!='emp':
+        #                 try:
+        #                     self.iterateList.remove((i,j))
+        #                 except ValueError:
+        #                     pass
+        #             try:
+        #                 self.unused.remove(front[0:2])
+        #                 self.unused.remove(back[0:2])
+        #             except ValueError:
+        #                 pass
+        #         self.board.append(line)
 
     def clear(self): #clear the board, get all pieces to initial unflipped states
         self.__init__()
 
     def getIterateList(self):
         return self.iterateList
+
+    def getDeltah(self):
+        return self.deltah
 
     def getunused(self):
         return self.unused
@@ -68,7 +71,8 @@ class Board():
     def place(self,row,column,piece):
         if piece.getColor() not in self.unused:
             # print "Not availble: this piece",piece.getColor()," has been used."
-            return False
+            return False #when place a piece h change could not be -1 #False
+        self.deltah = 0
         temp=[]
         currow=row
         for i in piece.getList():
@@ -78,8 +82,6 @@ class Board():
                spot = self.place1grid(currow,currcol,depth,piece.getColor(),piece.getSide())
                if spot is None: #unsuccessful, ditch the entire operation, does not change the state of the board, report message
                    # print "Placement failed: piece",piece.getColor(),"Try Again.\n"
-                   # if piece.getSide==1:
-                   #     piece.flip()  #flip the piece at initial state (could be rotated)
                    return False
                curr.append(spot)
                currcol+=1
@@ -92,19 +94,18 @@ class Board():
         for i in temp:
             currcol=column
             for j in i:
-                if (j[0]!='emp' and j[1]!='emp'):
-                    print "iterate List",j,currow,currcol,piece.getColor()
-                    try:
-                        self.iterateList.remove((currow,currcol))
-                        print "removing location",currow,currcol,j
-                    except ValueError:
-                        pass
+                # if (j[0]!='emp' and j[1]!='emp'):
+                #     # print "iterate List",j,currow,currcol,piece.getColor()
+                #     try:
+                #         self.iterateList.remove((currow,currcol))
+                #         print "removing location",currow,currcol,j
+                #     except ValueError:
+                #         pass
                 self.board[currow][currcol] = j
                 currcol+=1
             currow+=1
         self.unused.remove(piece.getColor()) #update the unused piece list
-        # if piece.getSide()==1: #piece was successfully put on board from the back, remeber it's in a flipped state
-        #     self.flipped.append(piece)
+        self.onBoard.append(piece)
         # print "Placement succeeded: piece ",piece.getColor()#,"\n"
         return True
 
@@ -121,10 +122,13 @@ class Board():
             if depth==1: #if the side we are inserting from is avaiable (='emp'), then accept the placement
                 if spot[frontback]=='emp':
                     spot[frontback]=color+side
+                    if spot[(frontback+1)%2] =='emp':self.deltah +=0.5 #emp to half minus 0.5
+                    else: self.deltah +=1.5 #half to full, reduce by 1.5
                     return spot
             if depth==2: #both sides have to be empty to be an acceptable placement
                 if spot[0]=="emp" and spot[1]=="emp":
                     spot = [color+side,color+side]
+                    self.deltah+=2 #emp to full, minus 2
                     return spot
             # print "Illegal Position: overlap not allowed at this position." #run through this step without return, unsuccessful attemp
             return None
@@ -165,6 +169,7 @@ def pieceInitialize():
 
 
 def main():
+    red,lightblue,blue,purple,orange,green,yellow,darkgreen,darkblue,pink1,pink2,pieceDic = pieceInitialize()
     board = Board()
     board.clear()
     board.display()
