@@ -1,0 +1,39 @@
+
+tests/10.40.160707067.cnf
+Assignment {1: True, 2: True, 3: True, 4: True, 5: False, 6: True, 7: True, 8: False, 9: True, 10: False}
+True
+
+tests/10.40.967323288.cnf
+Assignment {1: True, 2: True, 3: True, 4: True, 5: True, 6: True, 7: True, 8: False, 9: False, 10: True}
+True
+
+tests/10.42.1465130262.cnf
+Assignment {1: True, 2: True, 3: False, 4: True, 5: True, 6: True, 7: True, 8: True, 9: False, 10: False}
+True
+
+tests/10.42.504071595.cnf
+Assignment {1: True, 2: True, 3: True, 4: True, 5: True, 6: False, 7: True, 8: True, 9: True, 10: False}
+True
+
+tests/10.44.1247388329.cnf
+False
+
+tests/10.44.1667358355.cnf
+Assignment {1: True, 2: False, 3: True, 4: False, 5: True, 6: False, 7: False, 8: False, 9: False, 10: False}
+True
+
+tests/10.46.183405239.cnf
+Assignment {1: False, 2: True, 3: False, 4: False, 5: False, 6: False, 7: False, 8: False, 9: False, 10: True}
+True
+
+tests/10.46.623142927.cnf
+Assignment {1: False, 2: False, 3: True, 4: True, 5: False, 6: False, 7: True, 8: True, 9: False, 10: True}
+True
+
+tests/10.48.1494607484.cnf
+Assignment {1: False, 2: True, 3: False, 4: False, 5: False, 6: True, 7: True, 8: False, 9: True, 10: True}
+True
+
+tests/10.48.640112774.cnf
+False
+6.94668388367
