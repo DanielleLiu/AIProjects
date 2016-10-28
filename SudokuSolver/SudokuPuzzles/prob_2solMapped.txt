@@ -1,0 +1,21 @@
+
+A Solution:
+   9 6 b a    f d 2 1    0 8 e 7    4 c 5 3 
+   8 3 d e    c 0 9 5    4 b a f    2 1 6 7 
+   c 4 f 5    7 8 e 3    d 6 2 1    0 9 b a 
+   1 0 7 2    b a 4 6    5 3 c 9    f e 8 d 
+
+   0 5 4 9    a 1 8 2    3 7 f d    e b c 6 
+   a 2 e d    4 c 3 b    8 5 1 6    7 0 9 f 
+   b 7 8 f    d 6 5 0    c e 9 4    a 3 2 1 
+   3 1 6 c    e f 7 9    a 0 b 2    5 8 d 4 
+
+   d e a 6    5 9 0 8    7 f 4 b    1 2 3 c 
+   7 9 0 1    3 b f 4    6 2 8 c    d a e 5 
+   5 8 3 4    2 e 6 c    1 a d 0    b 7 f 9 
+   2 f c b    1 7 a d    e 9 3 5    6 4 0 8 
+
+   e c 5 8    6 3 b 7    f 4 0 a    9 d 1 2 
+   4 d 9 7    8 2 c f    b 1 6 e    3 5 a 0 
+   6 b 2 3    0 5 1 a    9 d 7 8    c f 4 e 
+   f a 1 0    9 4 d e    2 c 5 3    8 6 7 b 
